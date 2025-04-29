@@ -23,8 +23,6 @@ class Phone(Field):
 
 class Birthday(Field):
     def __init__(self, value):
-        if not re.match(r"^\d{2}\.\d{2}\.\d{4}$", value):
-            raise ValueError("Invalid date format. Use DD.MM.YYYY")
         try:
             datetime.strptime(value, "%d.%m.%Y")
         except ValueError:
@@ -201,6 +199,9 @@ def main():
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
+        if not user_input:
+            print("Empty input. Please try again.")
+            continue
         command, args = parse_input(user_input)
 
         if command in ["close", "exit"]:
